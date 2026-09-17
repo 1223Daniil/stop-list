@@ -18,6 +18,10 @@ const toSingle = (value: string | string[] | undefined) => {
   return value;
 };
 
+/**
+ * Разбор `searchParams` страницы в фильтры списка.
+ * Мусор в URL тихо отбрасывается, чтобы не падать на ручном вводе.
+ */
 export const parseMenuFilters = (params: {
   shop?: string | string[];
   status?: string | string[];
@@ -35,6 +39,7 @@ export const parseMenuFilters = (params: {
   };
 };
 
+/** Query string без пустых ключей. Пустая строка = «все». */
 export const buildFiltersQuery = (filters: MenuItemListFilters) => {
   const params = new URLSearchParams();
 
@@ -49,6 +54,9 @@ export const buildFiltersQuery = (filters: MenuItemListFilters) => {
   return params.toString();
 };
 
+/**
+ * Патч одного фильтра. `all` снимает ключ, чтобы URL оставался коротким.
+ */
 export const patchMenuFilters = (
   current: MenuItemListFilters,
   key: "shop" | "status",

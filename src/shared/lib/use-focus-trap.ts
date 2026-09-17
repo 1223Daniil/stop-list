@@ -16,6 +16,14 @@ const getFocusable = (container: HTMLElement) =>
     (element) => element.getAttribute("aria-hidden") !== "true",
   );
 
+/**
+ * Ловушка фокуса для dialog: Tab крутится внутри, Esc вызывает `onClose`.
+ * На выходе возвращает фокус на элемент, который открыл панель,
+ * и снимает `overflow: hidden` с body.
+ *
+ * Импортировать только из `@/shared/lib/use-focus-trap`, не из barrel:
+ * файл клиентский, иначе RSC подтянет `useEffect`.
+ */
 export const useFocusTrap = (
   containerRef: RefObject<HTMLElement | null>,
   isActive: boolean,

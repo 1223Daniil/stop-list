@@ -8,6 +8,7 @@ const VARIANT_CLASSNAME = {
   [BADGE_VARIANTS.MUTED]: "border-transparent bg-foreground/8 text-muted",
 } as const;
 
+/** Статус или причина. Текст короткий, без интерактива. */
 export const Badge = ({
   variant = BADGE_VARIANTS.NEUTRAL,
   className,

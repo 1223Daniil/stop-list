@@ -9,6 +9,10 @@ type StopPanelUiState = {
   closePanel: () => void;
 };
 
+/**
+ * UI панели стопа. Здесь лежит выбранная позиция, не список меню.
+ * Список остаётся в TanStack Query.
+ */
 export const useStopPanelStore = create<StopPanelUiState>((set) => ({
   selectedItem: null,
   isPanelOpen: false,

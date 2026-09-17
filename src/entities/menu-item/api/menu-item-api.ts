@@ -32,6 +32,7 @@ const withFilters = (filters: MenuItemListFilters) => {
   return query ? `${API_ROUTES.MENU_ITEMS}?${query}` : API_ROUTES.MENU_ITEMS;
 };
 
+/** GET /api/menu-items. Фильтры те же, что в URL. */
 export const fetchMenuItems = async (
   filters: MenuItemListFilters,
 ): Promise<MenuItem[]> => {
@@ -46,6 +47,7 @@ export const fetchMenuItems = async (
   return response.json();
 };
 
+/** POST /stop. Ошибки сервера пробрасываются как `Error` с текстом для тоста. */
 export const stopMenuItem = async (
   id: string,
   payload: StopItemPayload,
@@ -65,6 +67,7 @@ export const stopMenuItem = async (
   return response.json();
 };
 
+/** POST /resume. Нулевой остаток на сервере даёт 409. */
 export const resumeMenuItem = async (id: string): Promise<MenuItem> => {
   const response = await fetch(API_ROUTES.MENU_ITEM_RESUME(id), {
     method: "POST",

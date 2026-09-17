@@ -14,6 +14,7 @@ type MenuItemStatusBadgeProps = {
   isSaving?: boolean;
 };
 
+/** Статус с кроссфейдом. Пока мутация pending, вместо бейджа «Сохраняется». */
 export const MenuItemStatusBadge = ({
   item,
   isSaving = false,

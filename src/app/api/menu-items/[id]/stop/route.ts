@@ -21,6 +21,10 @@ const parseJsonBody = async (request: Request) => {
   }
 };
 
+/**
+ * POST /stop. Тело проверяет та же схема, что форма.
+ * Примерно в 20% отвечает 500, чтобы клиент показал откат оптимистики.
+ */
 export async function POST(request: Request, { params }: RouteContext) {
   await delay(MENU_API_DELAY_MS.MUTATION);
 

@@ -1,6 +1,7 @@
 import { MENU_ITEM_STATUS } from "./types";
 import type { MenuItem, MenuItemListFilters, StopItemPayload } from "./types";
 
+/** Проверяет, должна ли позиция остаться в текущем отфильтрованном списке. */
 export const itemMatchesFilters = (
   item: MenuItem,
   filters: MenuItemListFilters,
@@ -16,6 +17,10 @@ export const itemMatchesFilters = (
   return true;
 };
 
+/**
+ * Патчит позицию в кэше списка. Если после апдейта она не проходит фильтры,
+ * строка выкидывается: так стоп при `status=available` сразу убирает блюдо.
+ */
 export const patchMenuItemInList = (
   items: MenuItem[],
   id: string,
@@ -33,6 +38,7 @@ export const patchMenuItemInList = (
   });
 };
 
+/** Локальный снимок stopped-позиции до ответа сервера. */
 export const toStoppedItem = (
   item: MenuItem,
   payload: StopItemPayload,
@@ -46,6 +52,7 @@ export const toStoppedItem = (
   updatedAt: new Date().toISOString(),
 });
 
+/** Локальный снимок available-позиции до ответа сервера. */
 export const toAvailableItem = (item: MenuItem): MenuItem => ({
   ...item,
   status: { kind: MENU_ITEM_STATUS.AVAILABLE },

@@ -25,6 +25,10 @@ type StopItemContext = {
   prev: MenuItem[] | undefined;
 };
 
+/**
+ * Стоп позиции: сразу патчит кэш списка, при ошибке откатывает снимок
+ * и показывает тост. После ответа инвалидирует список.
+ */
 export const useStopItem = (filters: MenuItemListFilters) => {
   const queryClient = useQueryClient();
   const listKey = menuKeys.list(filters);

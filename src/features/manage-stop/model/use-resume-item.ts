@@ -16,6 +16,9 @@ type ResumeItemContext = {
   prev: MenuItem[] | undefined;
 };
 
+/**
+ * Снятие со стопа. Та же схема, что у `useStopItem`: оптимистика, откат, тост.
+ */
 export const useResumeItem = (filters: MenuItemListFilters) => {
   const queryClient = useQueryClient();
   const listKey = menuKeys.list(filters);

@@ -19,6 +19,10 @@ type StopReasonPanelProps = {
   filters: MenuItemListFilters;
 };
 
+/**
+ * Dialog стопа. Список под ним не перестраивается: панель `fixed` справа.
+ * Esc, Tab и возврат фокуса делает `useFocusTrap`.
+ */
 export const StopReasonPanel = ({ filters }: StopReasonPanelProps) => {
   const isPanelOpen = useStopPanelStore((state) => state.isPanelOpen);
   const item = useStopPanelStore((state) => state.selectedItem);

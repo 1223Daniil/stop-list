@@ -4,6 +4,7 @@ export const APP_DESCRIPTION = "Панель стоп-листа смены дл
 
 export const APP_MAX_WIDTH_PX = 1280;
 
+/** Клиентские пути мок-API. Совпадают с `src/app/api`. */
 export const API_ROUTES = {
   MENU_ITEMS: "/api/menu-items",
   MENU_ITEM_STOP: (id: string) => `/api/menu-items/${id}/stop`,

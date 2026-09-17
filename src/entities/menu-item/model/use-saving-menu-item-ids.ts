@@ -21,6 +21,9 @@ const readPendingId = (variables: unknown) => {
   return "";
 };
 
+/**
+ * Id позиций с pending stop/resume. Строка таблицы показывает «Сохраняется».
+ */
 export const useSavingMenuItemIds = () => {
   const ids = useMutationState({
     filters: {

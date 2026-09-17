@@ -19,6 +19,10 @@ export class MenuStoreError extends Error {
   }
 }
 
+/**
+ * In-memory меню смены. Лежит на `globalThis`, чтобы пережить HMR.
+ * На serverless холодный старт сбрасывает сид. Это ожидаемо.
+ */
 type GlobalMenuStore = typeof globalThis & {
   __stopListMenuItems?: MenuItem[];
 };
@@ -49,6 +53,7 @@ const cloneItem = (item: MenuItem): MenuItem => ({
   status: { ...item.status },
 });
 
+/** Список для GET. Отдаём клоны, чтобы handler не мутировал стор. */
 export const listMenuItems = (
   filters: MenuItemListFilters = {},
 ): MenuItem[] => {
@@ -67,6 +72,7 @@ export const listMenuItems = (
     .map(cloneItem);
 };
 
+/** Ставит позицию в стоп. 404 если id нет. */
 export const stopItem = (id: string, payload: StopItemPayload): MenuItem => {
   const item = getItems().find((candidate) => candidate.id === id);
 
@@ -85,6 +91,9 @@ export const stopItem = (id: string, payload: StopItemPayload): MenuItem => {
   });
 };
 
+/**
+ * Возвращает в продажу. 409 если уже available или остаток 0.
+ */
 export const resumeItem = (id: string): MenuItem => {
   const item = getItems().find((candidate) => candidate.id === id);
 

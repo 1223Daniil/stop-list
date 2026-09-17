@@ -17,6 +17,7 @@ type FiltersProps = {
   filters: MenuItemListFilters;
 };
 
+/** Фильтры пишут URL через `router.push`, чтобы работала кнопка «назад». */
 export const Filters = ({ filters }: FiltersProps) => {
   const router = useRouter();
   const pathname = usePathname();

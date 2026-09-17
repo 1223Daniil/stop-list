@@ -8,6 +8,10 @@ type ToastState = {
   dismissToast: (id: string) => void;
 };
 
+/**
+ * Zustand только для тостов. Список меню сюда не кладём.
+ * `showErrorToast` удобен вне React (onError мутации).
+ */
 export const useToastStore = create<ToastState>((set) => ({
   toasts: [],
   showToast: (message, variant = TOAST_VARIANTS.ERROR) => {
@@ -26,6 +30,7 @@ export const useToastStore = create<ToastState>((set) => ({
   },
 }));
 
+/** Показать ошибку из мутации, не подключая стор в компоненте. */
 export const showErrorToast = (message: string) => {
   useToastStore.getState().showToast(message, TOAST_VARIANTS.ERROR);
 };

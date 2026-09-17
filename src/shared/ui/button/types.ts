@@ -11,6 +11,7 @@ export type ButtonVariant =
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
+  /** Спиннер вместо children и `aria-busy`. Клик блокируется. */
   isLoading?: boolean;
   loadingText?: string;
   children: ReactNode;

@@ -5,6 +5,10 @@ import { FieldError } from "@/shared/ui/field-error";
 
 import type { SelectProps } from "../types";
 
+/**
+ * Селект с лейблом и ошибкой. `ref` нужен RHF.
+ * Ошибка вешается на поле через `aria-describedby`.
+ */
 export const Select = ({
   id,
   label,

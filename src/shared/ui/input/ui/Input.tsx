@@ -5,6 +5,9 @@ import { FieldError } from "@/shared/ui/field-error";
 
 import type { InputProps } from "../types";
 
+/**
+ * Инпут с лейблом и ошибкой. Тот же контракт a11y, что у `Select`.
+ */
 export const Input = ({
   id,
   label,

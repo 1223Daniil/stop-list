@@ -14,6 +14,10 @@ type MenuItemRowProps = {
   onResume: (item: MenuItem) => void;
 };
 
+/**
+ * Строка таблицы. Resume при нулевом остатке не уходит на сервер:
+ * кнопка `aria-disabled`, клик глушится на клиенте.
+ */
 export const MenuItemRow = ({
   item,
   isSaving = false,

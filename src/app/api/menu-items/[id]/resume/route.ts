@@ -12,6 +12,7 @@ type RouteContext = {
   params: Promise<{ id: string }>;
 };
 
+/** POST /resume. Та же задержка и шанс 500, что у /stop. */
 export async function POST(_request: Request, { params }: RouteContext) {
   await delay(MENU_API_DELAY_MS.MUTATION);
 

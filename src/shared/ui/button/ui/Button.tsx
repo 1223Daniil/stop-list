@@ -32,6 +32,10 @@ const Spinner = () => {
   );
 };
 
+/**
+ * Кнопка UI-кита. На время запроса передайте `isLoading`,
+ * чтобы не ловить двойной submit.
+ */
 export const Button = ({
   variant = BUTTON_VARIANTS.PRIMARY,
   isLoading = false,

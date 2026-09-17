@@ -28,6 +28,10 @@ export const menuItemListQuerySchema = z.object({
   status: menuItemStatusKindSchema.optional(),
 });
 
+/**
+ * Одна схема стопа для формы и `POST /api/menu-items/:id/stop`.
+ * Срок гоняет `validateUntil`: будущее, не дальше 24 часов, шаг 15 минут.
+ */
 export const stopItemPayloadSchema = z
   .object({
     reason: stopReasonSchema,

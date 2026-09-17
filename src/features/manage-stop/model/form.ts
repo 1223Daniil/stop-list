@@ -37,6 +37,7 @@ export const STOP_REASON_OPTIONS = [
   },
 ];
 
+/** Стартовые значения формы: у stopped берём текущие reason/until. */
 export const getStopFormValues = (item: MenuItem): StopFormValues => {
   if (item.status.kind === MENU_ITEM_STATUS.STOPPED) {
     return {

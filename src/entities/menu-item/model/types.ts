@@ -23,6 +23,10 @@ export const MENU_ITEM_STATUS = {
 export type MenuItemStatusKind =
   (typeof MENU_ITEM_STATUS)[keyof typeof MENU_ITEM_STATUS];
 
+/**
+ * Статус позиции. У stopped `until: null` значит «до конца смены»,
+ * иначе ISO-строка. На экране ISO форматируется в timezone браузера.
+ */
 export type MenuItemStatus =
   | { kind: typeof MENU_ITEM_STATUS.AVAILABLE }
   | {
@@ -31,6 +35,7 @@ export type MenuItemStatus =
       until: string | null;
     };
 
+/** Позиция меню смены. `updatedAt` на проводе всегда ISO. */
 export interface MenuItem {
   id: string;
   title: string;
@@ -40,11 +45,16 @@ export interface MenuItem {
   updatedAt: string;
 }
 
+/**
+ * Тело POST /stop. Та же форма уходит с клиента и проверяется
+ * `stopItemPayloadSchema` в route handler.
+ */
 export interface StopItemPayload {
   reason: StopReason;
   until: string | null;
 }
 
+/** Фильтры списка. Пустое поле значит «все». */
 export interface MenuItemListFilters {
   shop?: Shop;
   status?: MenuItemStatusKind;

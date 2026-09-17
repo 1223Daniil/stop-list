@@ -1,6 +1,12 @@
 export const MAX_AHEAD_MS = 24 * 60 * 60 * 1000;
 export const STEP_MS = 15 * 60 * 1000;
 
+/**
+ * Правило срока стопа для формы и сервера.
+ * `null` валиден (до конца смены). Иначе: ISO, будущее, <= 24 часов, шаг 15 минут.
+ *
+ * @returns текст ошибки или `null`, если значение ок
+ */
 export const validateUntil = (
   value: string | null,
   now = Date.now(),

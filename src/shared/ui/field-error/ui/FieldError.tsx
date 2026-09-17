@@ -6,6 +6,7 @@ export type FieldErrorProps = HTMLAttributes<HTMLParagraphElement> & {
   children: string;
 };
 
+/** Текст ошибки поля. `role="alert"` чтобы скринридер прочитал сразу. */
 export const FieldError = ({
   children,
   className,

@@ -27,6 +27,10 @@ type StopListProps = {
   filters: MenuItemListFilters;
 };
 
+/**
+ * Экран стоп-листа. Данные из Query, панель из Zustand.
+ * Фильтры приходят с RSC, чтобы совпасть с URL.
+ */
 export const StopList = ({ filters }: StopListProps) => {
   const { data, isPending, isError, error, refetch } = useQuery(
     menuItemsQueryOptions(filters),

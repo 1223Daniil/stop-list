@@ -5,6 +5,7 @@ import { delay } from "@/shared/lib";
 
 export const dynamic = "force-dynamic";
 
+/** GET списка. Задержка 500 мс, фильтры той же Zod-схемой, что URL. */
 export async function GET(request: Request) {
   await delay(MENU_API_DELAY_MS.GET);
 
