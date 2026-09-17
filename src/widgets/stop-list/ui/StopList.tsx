@@ -36,7 +36,7 @@ export const StopList = ({ filters }: StopListProps) => {
   const openPanel = useStopPanelStore((state) => state.openPanel);
 
   const handleStop = (item: MenuItem) => {
-    openPanel(item.id);
+    openPanel(item);
   };
 
   const handleResume = (item: MenuItem) => {
@@ -57,27 +57,31 @@ export const StopList = ({ filters }: StopListProps) => {
         </p>
       </header>
       <Filters filters={filters} />
-      {isPending ? <StopListTableSkeleton /> : null}
-      {isError ? (
-        <StopListError
-          message={
-            error instanceof Error ? error.message : "Попробуйте ещё раз"
-          }
-          onRetry={() => {
-            void refetch();
-          }}
-        />
-      ) : null}
-      {data && data.length === 0 ? <StopListEmpty /> : null}
-      {data && data.length > 0 ? (
-        <StopListTable
-          items={data}
-          savingItemIds={savingItemIds}
-          onStop={handleStop}
-          onResume={handleResume}
-        />
-      ) : null}
-      <StopReasonPanel />
+      <div className="flex items-start gap-6">
+        <div className="min-w-0 flex-1">
+          {isPending ? <StopListTableSkeleton /> : null}
+          {isError ? (
+            <StopListError
+              message={
+                error instanceof Error ? error.message : "Попробуйте ещё раз"
+              }
+              onRetry={() => {
+                void refetch();
+              }}
+            />
+          ) : null}
+          {data && data.length === 0 ? <StopListEmpty /> : null}
+          {data && data.length > 0 ? (
+            <StopListTable
+              items={data}
+              savingItemIds={savingItemIds}
+              onStop={handleStop}
+              onResume={handleResume}
+            />
+          ) : null}
+        </div>
+        <StopReasonPanel filters={filters} />
+      </div>
     </section>
   );
 };

@@ -5,41 +5,55 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   menuKeys,
   patchMenuItemInList,
-  resumeMenuItem,
-  toAvailableItem,
+  stopMenuItem,
+  toStoppedItem,
 } from "@/entities/menu-item";
-import type { MenuItem, MenuItemListFilters } from "@/entities/menu-item";
+import type {
+  MenuItem,
+  MenuItemListFilters,
+  StopItemPayload,
+} from "@/entities/menu-item";
 import { getMutationErrorMessage } from "@/shared/lib";
 import { showErrorToast } from "@/shared/ui/toast";
 
-type ResumeItemContext = {
+type StopItemVariables = {
+  id: string;
+  payload: StopItemPayload;
+};
+
+type StopItemContext = {
   prev: MenuItem[] | undefined;
 };
 
-export const useResumeItem = (filters: MenuItemListFilters) => {
+export const useStopItem = (filters: MenuItemListFilters) => {
   const queryClient = useQueryClient();
   const listKey = menuKeys.list(filters);
 
-  return useMutation<MenuItem, Error, string, ResumeItemContext>({
-    mutationKey: [...menuKeys.all, "resume"],
-    mutationFn: resumeMenuItem,
-    onMutate: async (id) => {
+  return useMutation<MenuItem, Error, StopItemVariables, StopItemContext>({
+    mutationKey: [...menuKeys.all, "stop"],
+    mutationFn: ({ id, payload }) => stopMenuItem(id, payload),
+    onMutate: async ({ id, payload }) => {
       await queryClient.cancelQueries({ queryKey: listKey });
       const prev = queryClient.getQueryData<MenuItem[]>(listKey);
 
       queryClient.setQueryData<MenuItem[]>(listKey, (items = []) =>
-        patchMenuItemInList(items, id, toAvailableItem, filters),
+        patchMenuItemInList(
+          items,
+          id,
+          (item) => toStoppedItem(item, payload),
+          filters,
+        ),
       );
 
       return { prev };
     },
-    onError: (error, _id, context) => {
+    onError: (error, _variables, context) => {
       if (context?.prev) {
         queryClient.setQueryData(listKey, context.prev);
       }
 
       showErrorToast(
-        getMutationErrorMessage(error, "Не удалось вернуть в продажу"),
+        getMutationErrorMessage(error, "Не удалось поставить в стоп-лист"),
       );
     },
     onSettled: () => {

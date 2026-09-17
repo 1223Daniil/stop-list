@@ -1,15 +1,17 @@
 import { create } from "zustand";
 
+import type { MenuItem } from "@/entities/menu-item";
+
 type StopPanelUiState = {
-  selectedItemId: string | null;
+  selectedItem: MenuItem | null;
   isPanelOpen: boolean;
-  openPanel: (itemId: string) => void;
+  openPanel: (item: MenuItem) => void;
   closePanel: () => void;
 };
 
 export const useStopPanelStore = create<StopPanelUiState>((set) => ({
-  selectedItemId: null,
+  selectedItem: null,
   isPanelOpen: false,
-  openPanel: (itemId) => set({ selectedItemId: itemId, isPanelOpen: true }),
-  closePanel: () => set({ selectedItemId: null, isPanelOpen: false }),
+  openPanel: (item) => set({ selectedItem: item, isPanelOpen: true }),
+  closePanel: () => set({ selectedItem: null, isPanelOpen: false }),
 }));

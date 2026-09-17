@@ -12,6 +12,11 @@ export {
 } from "./model/labels";
 export { menuItemsQueryOptions, menuKeys } from "./model/queries";
 export {
+  patchMenuItemInList,
+  toAvailableItem,
+  toStoppedItem,
+} from "./model/optimistic";
+export {
   menuItemListQuerySchema,
   menuItemStatusKindSchema,
   shopSchema,

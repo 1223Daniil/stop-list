@@ -12,6 +12,7 @@ export const Select = ({
   error,
   placeholder,
   className,
+  ref,
   ...props
 }: SelectProps) => {
   const generatedId = useId();
@@ -25,6 +26,7 @@ export const Select = ({
       </label>
       <select
         id={fieldId}
+        ref={ref}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={cn(

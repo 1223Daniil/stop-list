@@ -39,38 +39,50 @@ export const MenuItemRow = ({
         <MenuItemStatusBadge item={item} isSaving={isSaving} />
       </td>
       <td className="px-4 py-3 text-right">
-        {isStopped ? (
-          <span
-            className="inline-flex"
-            title={isResumeBlocked ? ZERO_STOCK_RESUME_HINT : undefined}
-          >
+        <div className="flex justify-end gap-2">
+          {isStopped ? (
+            <>
+              <Button
+                variant={BUTTON_VARIANTS.SECONDARY}
+                className="h-8 px-3 text-xs"
+                disabled={isSaving}
+                onClick={() => onStop(item)}
+              >
+                Изменить
+              </Button>
+              <span
+                className="inline-flex"
+                title={isResumeBlocked ? ZERO_STOCK_RESUME_HINT : undefined}
+              >
+                <Button
+                  variant={BUTTON_VARIANTS.SECONDARY}
+                  className="h-8 px-3 text-xs"
+                  disabled={isResumeBlocked || isSaving}
+                  aria-describedby={
+                    isResumeBlocked ? `resume-hint-${item.id}` : undefined
+                  }
+                  onClick={() => onResume(item)}
+                >
+                  Вернуть в продажу
+                </Button>
+                {isResumeBlocked ? (
+                  <span id={`resume-hint-${item.id}`} className="sr-only">
+                    {ZERO_STOCK_RESUME_HINT}
+                  </span>
+                ) : null}
+              </span>
+            </>
+          ) : (
             <Button
               variant={BUTTON_VARIANTS.SECONDARY}
               className="h-8 px-3 text-xs"
-              disabled={isResumeBlocked || isSaving}
-              aria-describedby={
-                isResumeBlocked ? `resume-hint-${item.id}` : undefined
-              }
-              onClick={() => onResume(item)}
+              disabled={isSaving}
+              onClick={() => onStop(item)}
             >
-              Вернуть в продажу
+              В стоп-лист
             </Button>
-            {isResumeBlocked ? (
-              <span id={`resume-hint-${item.id}`} className="sr-only">
-                {ZERO_STOCK_RESUME_HINT}
-              </span>
-            ) : null}
-          </span>
-        ) : (
-          <Button
-            variant={BUTTON_VARIANTS.SECONDARY}
-            className="h-8 px-3 text-xs"
-            disabled={isSaving}
-            onClick={() => onStop(item)}
-          >
-            В стоп-лист
-          </Button>
-        )}
+          )}
+        </div>
       </td>
     </tr>
   );

@@ -1,4 +1,4 @@
-import type { SelectHTMLAttributes } from "react";
+import type { Ref, SelectHTMLAttributes } from "react";
 
 export type SelectOption = {
   value: string;
@@ -13,4 +13,5 @@ export type SelectProps = Omit<
   options: SelectOption[];
   error?: string;
   placeholder?: string;
+  ref?: Ref<HTMLSelectElement>;
 };

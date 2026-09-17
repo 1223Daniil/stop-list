@@ -1,5 +1,6 @@
 export { cn } from "./cn";
 export { delay } from "./delay";
+export { getMutationErrorMessage } from "./get-mutation-error-message";
 export {
   DATETIME_LOCAL_STEP_SECONDS,
   datetimeLocalToIso,
