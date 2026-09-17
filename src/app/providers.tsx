@@ -4,6 +4,8 @@ import { useState, type ReactNode } from "react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { ToastViewport } from "@/shared/ui/toast";
+
 type ProvidersProps = {
   children: ReactNode;
 };
@@ -22,6 +24,9 @@ export const Providers = ({ children }: ProvidersProps) => {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <ToastViewport />
+    </QueryClientProvider>
   );
 };
