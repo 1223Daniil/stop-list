@@ -46,6 +46,7 @@ export const MenuItemRow = ({
                 variant={BUTTON_VARIANTS.SECONDARY}
                 className="h-8 px-3 text-xs"
                 disabled={isSaving}
+                aria-label={`Изменить стоп: ${item.title}`}
                 onClick={() => onStop(item)}
               >
                 Изменить
@@ -56,12 +57,23 @@ export const MenuItemRow = ({
               >
                 <Button
                   variant={BUTTON_VARIANTS.SECONDARY}
-                  className="h-8 px-3 text-xs"
-                  disabled={isResumeBlocked || isSaving}
+                  className={cn(
+                    "h-8 px-3 text-xs",
+                    isResumeBlocked && "cursor-not-allowed opacity-60",
+                  )}
+                  disabled={isSaving}
+                  aria-disabled={isResumeBlocked}
                   aria-describedby={
                     isResumeBlocked ? `resume-hint-${item.id}` : undefined
                   }
-                  onClick={() => onResume(item)}
+                  aria-label={`Вернуть в продажу: ${item.title}`}
+                  onClick={() => {
+                    if (isResumeBlocked || isSaving) {
+                      return;
+                    }
+
+                    onResume(item);
+                  }}
                 >
                   Вернуть в продажу
                 </Button>
@@ -77,6 +89,7 @@ export const MenuItemRow = ({
               variant={BUTTON_VARIANTS.SECONDARY}
               className="h-8 px-3 text-xs"
               disabled={isSaving}
+              aria-label={`Поставить в стоп-лист: ${item.title}`}
               onClick={() => onStop(item)}
             >
               В стоп-лист

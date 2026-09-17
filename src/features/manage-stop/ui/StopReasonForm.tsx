@@ -91,6 +91,7 @@ export const StopReasonForm = ({ item, filters }: StopReasonFormProps) => {
         render={({ field, fieldState }) => (
           <Select
             label="Причина"
+            aria-required
             placeholder="Выберите причину"
             options={STOP_REASON_OPTIONS}
             name={field.name}

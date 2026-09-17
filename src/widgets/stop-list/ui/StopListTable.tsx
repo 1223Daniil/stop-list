@@ -18,13 +18,22 @@ export const StopListTable = ({
   return (
     <div className="overflow-x-auto rounded-xl border border-border bg-surface">
       <table className="w-full min-w-[960px] border-collapse text-left">
+        <caption className="sr-only">Меню смены</caption>
         <thead className="border-b border-border bg-background text-xs tracking-wide text-muted uppercase">
           <tr>
-            <th className="px-4 py-3 font-medium">Позиция</th>
-            <th className="px-4 py-3 font-medium">Цех</th>
-            <th className="px-4 py-3 font-medium">Остаток</th>
-            <th className="px-4 py-3 font-medium">Статус</th>
-            <th className="px-4 py-3 font-medium">
+            <th scope="col" className="px-4 py-3 font-medium">
+              Позиция
+            </th>
+            <th scope="col" className="px-4 py-3 font-medium">
+              Цех
+            </th>
+            <th scope="col" className="px-4 py-3 font-medium">
+              Остаток
+            </th>
+            <th scope="col" className="px-4 py-3 font-medium">
+              Статус
+            </th>
+            <th scope="col" className="px-4 py-3 font-medium">
               <span className="sr-only">Действия</span>
             </th>
           </tr>
