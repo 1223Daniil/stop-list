@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Стоп-лист кухни
 
-## Getting Started
+Панель для менеджера зала: меню смены, фильтры по цеху и статусу, постановка позиции в стоп и возврат в продажу. Бэкенд имитируют route handler'ы Next.js, данные живут в памяти процесса.
 
-First, run the development server:
+## Запуск
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Полезные скрипты:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run format
+```
 
-## Learn More
+`npm test` гоняет Vitest. Сейчас там один кейс: `useStopItem` сразу патчит кэш списка и откатывает его, если POST падает.
 
-To learn more about Next.js, take a look at the following resources:
+## Слои
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Проект собран по FSD. Next.js `src/app` это слой app: routing, layout, провайдеры и мок-API.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app`: `page.tsx` читает `searchParams`, `app/api/**` отдает список и мутации
+- `widgets/stop-list`: экран целиком, без прямых `fetch`
+- `features/filter-menu-items`: фильтры в URL
+- `features/manage-stop`: форма стопа, resume, оптимистичные мутации
+- `entities/menu-item`: типы, ключи кэша, API-клиент, строка таблицы
+- `shared`: кнопки, селект, тосты, работа со временем
 
-## Deploy on Vercel
+Граница сервер / клиент:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- RSC: `src/app/page.tsx` парсит `?shop=&status=` и прокидывает фильтры в виджет
+- клиент: таблица, Query, Zustand, форма и dialog
+- сервер: route handlers и `entities/menu-item/server` (сид и in-memory store)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Почему так
+
+Список держит TanStack Query, Zustand только для открытой панели и тостов. Если сложить меню в стор, кэш и UI-состояние начнут дублироваться.
+
+Фильтры пишутся в URL через `router.push`, поэтому они переживают перезагрузку и кнопку «назад».
+
+Одна Zod-схема (`stopItemPayloadSchema`) стоит и на форме, и в `POST /api/menu-items/:id/stop`. Иначе правила срока и причины разъедутся.
+
+Ориентир ТЗ предлагал плоский `features/stop-list/`. Я разложил те же куски по FSD. Для следующей фичи это спокойнее, чем один большой каталог.
+
+## Допущения
+
+- Срок стопа показывается в локальном времени браузера. На сервер уходит ISO.
+- `until: null` значит «до конца смены», час закрытия смены не считаем.
+- In-memory store на Vercel живет, пока жив инстанс. Холодный старт сбрасывает сид. Это ожидаемо.
+- `POST /stop` и `POST /resume` отвечают с задержкой 600 мс и примерно в 20% случаев отдают ошибку. Так проверяется откат оптимистики.
+- `GET /api/menu-items` тоже с искусственной задержкой.
+
+## Что доделал бы
+
+- Персист стора или нормальный бэкенд: на serverless память слишком короткоживущая.
+- e2e на фильтры в URL, стоп, resume и откат по ошибке 20%.
+- Если бы время еще было, вынес бы мок-ошибки за флаг, чтобы на демо не ловить случайный 500.
