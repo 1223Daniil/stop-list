@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 
+import { APP_DESCRIPTION, APP_NAME } from "@/shared/config";
+
 import { Providers } from "./providers";
 
 import "./globals.css";
@@ -11,8 +13,8 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Стоп-лист кухни",
-  description: "Панель стоп-листа смены для менеджера зала",
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
